@@ -1,0 +1,13 @@
+fifo_ip_project.cache
+fifo_ip_project.sim
+fifo_ip_project.hw
+fifo_ip_project.ip_user_files
+xsim.dir
+.Xil
+*.log
+*.jou
+*.str
+*.pg
+*.pb 
+*.wdb 
+*.wcfg
