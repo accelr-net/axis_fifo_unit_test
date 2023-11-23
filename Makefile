@@ -2,7 +2,7 @@
 
 # Variables
 VIVADO_BIN_DIR := /tools/Xilinx/Vivado/2022.2/bin
-SIM_DIR := /home/sachith/Documents/ACCELR/Projects/fifo_ip/fifo_ip_project.sim/sim_1/behav/xsim
+SIM_DIR := fifo_ip_project.sim/sim_1/behav/xsim
 TOP_MODULE := tb_top
 TB_TCL_FILE := tb_top.tcl
 RUN_ALL_SCRIPT := run_all.tcl
@@ -23,7 +23,6 @@ elaborate:
 simulate:
 	@echo "Simulating design..."
 	$(VIVADO_BIN_DIR)/xsim $(TOP_MODULE)_behav -key {Behavioral:sim_1:Functional:$(TOP_MODULE)} -tclbatch $(RUN_ALL_SCRIPT) -log simulate.log
-	# $(VIVADO_BIN_DIR)/xsim $(TOP_MODULE)_behav -key {Behavioral:sim_1:Functional:$(TOP_MODULE)} -tclbatch $(SIM_DIR)/$(TB_TCL_FILE) -log simulate.log
 
 clean: 
 	rm -rf *.log *.pg *.log *.str *.jou *.pb xsim.dir .Xil *.wdb *.wcfg
