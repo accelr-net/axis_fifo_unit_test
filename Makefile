@@ -1,6 +1,7 @@
 # Makefile for Vivado Simulation
 
 # Variables
+# copy the bin directory path to VIVADO_BIN_DIR what you get when you enter `which vivado` in your terminal
 VIVADO_BIN_DIR := /tools/Xilinx/Vivado/2022.2/bin
 SIM_DIR := fifo_ip_project.sim/sim_1/behav/xsim
 TOP_MODULE := tb_top
