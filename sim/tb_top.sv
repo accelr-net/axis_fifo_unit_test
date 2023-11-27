@@ -22,7 +22,7 @@
 import axi4stream_vip_pkg::*;
 import axi4stream_vip_0_pkg::*;
 import axi4stream_vip_1_pkg::*;
-// import data_packet_pkg::*;
+import axi4s_vip_base::*;
 import fifo_pkg::*;
 
 
@@ -72,11 +72,12 @@ logic                   s_axis_tlast;
     axi4stream_vip_0_mst_t           mst_agent;
     axi4stream_vip_1_slv_t           slv_agent;
 
-    fifo_packet_sequence                          fifo_sequence;
-    fifo_beat_subscriber                          fifo_beat_subscriber_for_mst;
-    fifo_beat_subscriber                          fifo_beat_subscriber_for_slv;
-    fifo_packet_subscriber                        fifo_subscriber_for_packet;
-    fifo_model                                    model;
+    fifo_packet_sequence                fifo_sequence;
+    fifo_beat_subscriber                fifo_beat_subscriber_for_mst;
+    fifo_beat_subscriber                fifo_beat_subscriber_for_slv;
+    fifo_packet_subscriber              fifo_subscriber_for_packet;
+    // packet_subscriber #(fifo_packet)    model;
+    fifo_model                       model;
 
  
 axi4stream_vip_0 axi4master (
@@ -86,7 +87,7 @@ axi4stream_vip_0 axi4master (
  .m_axis_tready(m_axis_tready),  // input wire [0 : 0] m_axis_tready
  .m_axis_tdata(m_axis_tdata),    // output wire [7 : 0] m_axis_tdata
  .m_axis_tkeep(m_axis_tkeep),    // output wire [0 : 0] m_axis_tkeep
- .m_axis_tlast(m_axis_tlast)    // output wire [0 : 0] m_axis_tlast
+ .m_axis_tlast(m_axis_tlast)     // output wire [0 : 0] m_axis_tlast
 );
 
 axi4stream_vip_1 axi4slave (
@@ -96,7 +97,7 @@ axi4stream_vip_1 axi4slave (
  .s_axis_tready(s_axis_tready),  // output wire [0 : 0] s_axis_tready
  .s_axis_tdata(s_axis_tdata),    // input wire [7 : 0] s_axis_tdata
  .s_axis_tkeep(s_axis_tkeep),    // input wire [0 : 0] s_axis_tkeep
- .s_axis_tlast(s_axis_tlast)    // input wire [0 : 0] s_axis_tlast
+ .s_axis_tlast(s_axis_tlast)     // input wire [0 : 0] s_axis_tlast
 );
 
 AXI_FIFO #(
