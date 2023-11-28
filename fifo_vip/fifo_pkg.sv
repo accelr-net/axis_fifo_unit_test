@@ -11,4 +11,5 @@ package fifo_pkg;
 
     typedef beat_subscriber #(fifo_packet)      fifo_beat_subscriber;
     typedef packet_subscriber #(fifo_packet)    fifo_packet_subscriber;
+    // typedef model #(fifo_packet)                fifo_model;
 endpackage: fifo_pkg

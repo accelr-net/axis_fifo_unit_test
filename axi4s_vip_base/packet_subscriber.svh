@@ -9,14 +9,14 @@ class packet_subscriber #(
     int                                 fail_count;
 
     function new(
-        ref beat_subscriber #(packet_t)     slv_beat_sub,
-        ref beat_subscriber #(packet_t)     mst_beat_sub,
+        beat_subscriber #(packet_t)     slv_beat_sub,
+        beat_subscriber #(packet_t)     mst_beat_sub,
         model #(packet_t)                   dut_model
     );
-        slv_beat_subscriber     =       slv_beat_sub;
-        mst_beat_subscriber     =       mst_beat_sub;
-        model_inst              =       dut_model;
-        expected_packets = new();
+        slv_beat_subscriber     = slv_beat_sub;
+        mst_beat_subscriber     = mst_beat_sub;
+        model_inst              = dut_model;
+        expected_packets        = new();
     endfunction: new
 
     task do_work();

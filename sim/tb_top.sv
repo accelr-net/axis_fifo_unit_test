@@ -77,7 +77,7 @@ logic                   s_axis_tlast;
     fifo_beat_subscriber                fifo_beat_subscriber_for_slv;
     fifo_packet_subscriber              fifo_subscriber_for_packet;
     // packet_subscriber #(fifo_packet)    model;
-    fifo_model                       model;
+    fifo_model           fmodel;
 
  
 axi4stream_vip_0 axi4master (
@@ -172,10 +172,13 @@ initial begin
   * Slave VIP create TREADY if it is on 
   ***************************************************************************************************/
   fifo_sequence = new(mst_agent,slv_agent);
-  model         = new();
-  fifo_beat_subscriber_for_mst = new(mst_agent.monitor.item_collected_port);
-  fifo_beat_subscriber_for_slv = new(slv_agent.monitor.item_collected_port);
-  fifo_subscriber_for_packet = new(fifo_beat_subscriber_for_slv,fifo_beat_subscriber_for_mst,model);
+//   model         = new();
+  fifo_beat_subscriber_for_mst  = new(mst_agent.monitor.item_collected_port);
+  fifo_beat_subscriber_for_slv  = new(slv_agent.monitor.item_collected_port);
+//   model         = new(fifo_beat_subscriber_for_slv, fifo_beat_subscriber_for_mst, fmodel);
+  fmodel = new();
+  fifo_subscriber_for_packet    = new(fifo_beat_subscriber_for_slv,fifo_beat_subscriber_for_mst,fmodel);
+  
   fork
       begin
           fifo_sequence.do_work();
