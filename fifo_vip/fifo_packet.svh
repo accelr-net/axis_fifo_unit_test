@@ -1,6 +1,5 @@
 class fifo_packet extends data_packet;
-    rand u8_array    data_buffer; //for using randomize()
-    // u8_array    data_buffer; //for using post_randomize()
+    u8_array    data_buffer;
     
     function new();
     endfunction
@@ -20,13 +19,14 @@ class fifo_packet extends data_packet;
     endfunction
 
     function void post_randomize();
+        int         MIN_SIZE            = 1;
         int         MAX_SIZE            = 10;
         int         MIN_VALUE_OF_RANGE  = 10;
         int         MAX_VALUE_OF_RANGE  = 100;
         u8_array    data;
-        //concaticate 
-        for(int i = 0; i<$urandom_range(1,MAX_SIZE); i++) begin
-            data_buffer.push_back($urandom_range(MIN_VALUE_OF_RANGE,MAX_VALUE_OF_RANGE));
+        //Concatinate 
+        for(int i = 0; i<$urandom_range(MIN_SIZE, MAX_SIZE); i++) begin
+            data_buffer.push_back($urandom_range(MIN_VALUE_OF_RANGE, MAX_VALUE_OF_RANGE));
         end
     endfunction: post_randomize
 
@@ -34,7 +34,7 @@ class fifo_packet extends data_packet;
         bit is_identical = 1'b1;
         fifo_packet second_fifo_packet;
         type_check: assert ($cast(second_fifo_packet, second_packet))
-            else $fatal(1, "**** cast fail!!! ****");
+            else $fatal(1, "**** fifo_packet.do_compare() - packet types of comparing packets mismatch!!! ****");
     
         foreach(second_fifo_packet.data_buffer[i]) begin
             if(this.data_buffer[i] == second_fifo_packet.data_buffer[i]) begin

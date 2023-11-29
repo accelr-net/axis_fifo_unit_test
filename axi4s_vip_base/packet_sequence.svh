@@ -13,7 +13,7 @@ virtual class packet_sequence #(
     endfunction: new
     
     task do_work();
-        // Fork do_slv_work & do_mst_work
+        //Fork do_slv_work & do_mst_work
         fork
             begin
                 do_mst_work();
@@ -21,14 +21,13 @@ virtual class packet_sequence #(
             begin
                 do_slv_work();
             end
-        // join_any
         join
     endtask: do_work
     
     pure virtual protected task do_mst_work();
     
     protected task do_slv_work();
-        // Selt flow control config to slave_driver
+        //Selt flow control config to slave_driver
         axi4stream_ready_gen ready_gen;
         ready_gen = slv_agent.driver.create_ready("ready_gen");
         ready_gen.set_ready_policy(XIL_AXI4STREAM_READY_GEN_OSC);
@@ -42,7 +41,7 @@ virtual class packet_sequence #(
         automatic u8_array                  data_array;
 
         data_array      = packet.serialize();
-        beat_count      = data_array.size(); //beat count
+        beat_count      = data_array.size();
         for(int j = 0; j < beat_count; j++) begin
             automatic axi4stream_transaction    wr_transaction;
             automatic axi4stream_transaction    wr_transactionc;

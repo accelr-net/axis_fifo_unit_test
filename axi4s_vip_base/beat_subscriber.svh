@@ -1,24 +1,23 @@
 class beat_subscriber #(
-    type packet_t           = data_packet
+    type packet_t   =   data_packet
 );
-    axi4stream_monitor_transaction                              beat_queue[$];
-    packet_t                                                    packet_queue[$];
-    axi4s_item_collected_port                                   item_collection_port;
+    axi4stream_monitor_transaction  beat_queue[$];
+    packet_t                        packet_queue[$];
+    axi4s_item_collected_port       item_collection_port;
 
     function new(
-        ref axi4s_item_collected_port     item_collection_port
+        ref axi4s_item_collected_port   item_collection_port
     );
         this.item_collection_port = item_collection_port;
     endfunction: new
 
     task do_work();
         forever begin
-            axi4stream_monitor_transaction      current_transaction;
-            packet_t                            current_packet;
-            u8                                  current_data;
-            u8_array                            current_packet_with_u8_type;
-            xil_axi4stream_strb              for_ex_keep[$];
-            
+            axi4stream_monitor_transaction  current_transaction;
+            packet_t                        current_packet;
+            u8                              current_data;
+            u8_array                        current_packet_with_u8_type;
+            xil_axi4stream_strb             for_ex_keep[$];
             item_collection_port.get(current_transaction);
             
             if(current_transaction.get_keep_beat() == 1) begin

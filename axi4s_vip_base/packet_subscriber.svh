@@ -1,22 +1,22 @@
 class packet_subscriber #(
     type packet_t = data_packet
 );
-    beat_subscriber #(packet_t)         mst_beat_subscriber;
-    beat_subscriber #(packet_t)         slv_beat_subscriber;
-    mailbox                             expected_packets;
-    model           #(packet_t)         model_inst;
-    int                                 pass_count;
-    int                                 fail_count;
+    beat_subscriber #(packet_t) mst_beat_subscriber;
+    beat_subscriber #(packet_t) slv_beat_subscriber;
+    mailbox                     expected_packets;
+    model           #(packet_t) model_inst;
+    int                         pass_count;
+    int                         fail_count;
 
     function new(
-        beat_subscriber #(packet_t)     slv_beat_sub,
-        beat_subscriber #(packet_t)     mst_beat_sub,
-        model #(packet_t)                   dut_model
+        beat_subscriber #(packet_t) slv_beat_sub,
+        beat_subscriber #(packet_t) mst_beat_sub,
+        model #(packet_t)           dut_model
     );
-        slv_beat_subscriber     = slv_beat_sub;
-        mst_beat_subscriber     = mst_beat_sub;
-        model_inst              = dut_model;
-        expected_packets        = new();
+        slv_beat_subscriber =   slv_beat_sub;
+        mst_beat_subscriber =   mst_beat_sub;
+        model_inst          =   dut_model;
+        expected_packets    =   new();
     endfunction: new
 
     task do_work();
@@ -36,7 +36,7 @@ class packet_subscriber #(
         while(1) begin
             packet_t    last_packet; 
             packet_t    expected_values[$];
-            last_packet     = mst_beat_subscriber.pop();
+            last_packet = mst_beat_subscriber.pop();
             if(last_packet.serialize().size() > 0) begin
                 expected_values = model_inst.get_expected_packet(last_packet);
                 foreach (expected_values[i]) begin
@@ -49,9 +49,9 @@ class packet_subscriber #(
 
     task read_from_slv();
         while(1) begin    
-            packet_t                    slv_last_packet;
-            packet_t                    expected_last_packet;
-            slv_last_packet           = slv_beat_subscriber.pop();
+            packet_t    slv_last_packet;
+            packet_t    expected_last_packet;
+            slv_last_packet = slv_beat_subscriber.pop();
             if(slv_last_packet.serialize().size() > 0) begin
                 expected_packets.get(expected_last_packet); 
                 if(slv_last_packet.do_compare(expected_last_packet)) begin
