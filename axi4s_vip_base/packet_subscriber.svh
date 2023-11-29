@@ -43,7 +43,7 @@ class packet_subscriber #(
                     expected_packets.put(expected_values[i]);
                 end
             end
-            #1;
+            #10;
         end
     endtask: read_from_mst
 
@@ -52,7 +52,6 @@ class packet_subscriber #(
             packet_t                    slv_last_packet;
             packet_t                    expected_last_packet;
             slv_last_packet           = slv_beat_subscriber.pop();
-
             if(slv_last_packet.serialize().size() > 0) begin
                 expected_packets.get(expected_last_packet); 
                 if(slv_last_packet.do_compare(expected_last_packet)) begin
@@ -62,7 +61,7 @@ class packet_subscriber #(
                     fail_count = fail_count + 1;
                 end
             end
-            #1;
+            #10;
         end
     endtask: read_from_slv
 

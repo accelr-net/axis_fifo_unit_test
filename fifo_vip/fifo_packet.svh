@@ -1,8 +1,8 @@
 class fifo_packet extends data_packet;
-    u8_array    data_buffer;
+    rand u8_array    data_buffer; //for using randomize()
+    // u8_array    data_buffer; //for using post_randomize()
     
     function new();
-        data_buffer[0] = 8'd0;
     endfunction
 
     //TODOs-function - post_randomize()
@@ -26,7 +26,7 @@ class fifo_packet extends data_packet;
         int         MAX_VALUE_OF_RANGE  = 100;
         u8_array    data;
         //concaticate 
-        for(int i = 0; i<$urandom_range(MAX_SIZE); i++) begin
+        for(int i = 0; i<$urandom_range(1,MAX_SIZE); i++) begin
             data_buffer.push_back($urandom_range(MIN_VALUE_OF_RANGE,MAX_VALUE_OF_RANGE));
         end
     endfunction: post_randomize

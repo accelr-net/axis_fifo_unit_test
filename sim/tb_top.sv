@@ -182,7 +182,7 @@ initial begin
   fork
       begin
           fifo_sequence.do_work();
-          #1000;
+        //   #1000;
       end
       begin
           fifo_subscriber_for_packet.do_work();
@@ -196,8 +196,10 @@ initial begin
       end
   join_any
     // join
-  #1000000;
+  $display("time just after fork exit : %0t", $realtime);
+  #2000000;
   disable fork;
+  $display("time after delay fork exit : %0t", $realtime);
   fifo_subscriber_for_packet.publish_results();
   #1ns;
   $finish();
