@@ -5,13 +5,10 @@ class beat_subscriber #(
     packet_t                                                    packet_queue[$];
     axi4s_item_collected_port                                   item_collection_port;
 
-    int pop_count;
-
     function new(
         ref axi4s_item_collected_port     item_collection_port
     );
         this.item_collection_port = item_collection_port;
-        pop_count = 0;
     endfunction: new
 
     task do_work();
@@ -33,14 +30,10 @@ class beat_subscriber #(
                     end
                     beat_queue.delete();
                     current_packet = new();
-                    current_packet.deserialize(current_packet_with_u8_type);
-                    packet_queue.push_back(current_packet);
+                    if(current_packet.deserialize(current_packet_with_u8_type)>0) begin
+                        packet_queue.push_back(current_packet);
+                    end
                     current_packet_with_u8_type.delete();
-                    pop_count = pop_count + 1;
-                    // $display("pop count : %d, data0 : %d", pop_count, current_packet.serialize()[0]);
-                end
-                else begin
-                    // $display("============ NO LAST ===============");
                 end
             end
         end
