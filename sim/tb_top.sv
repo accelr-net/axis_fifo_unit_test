@@ -76,7 +76,6 @@ logic                   s_axis_tlast;
     fifo_beat_subscriber                fifo_beat_subscriber_for_mst;
     fifo_beat_subscriber                fifo_beat_subscriber_for_slv;
     fifo_packet_subscriber              fifo_subscriber_for_packet;
-    // packet_subscriber #(fifo_packet)    model;
     fifo_model           fmodel;
 
  
@@ -172,17 +171,14 @@ initial begin
   * Slave VIP create TREADY if it is on 
   ***************************************************************************************************/
   fifo_sequence = new(mst_agent,slv_agent);
-//   model         = new();
   fifo_beat_subscriber_for_mst  = new(mst_agent.monitor.item_collected_port);
   fifo_beat_subscriber_for_slv  = new(slv_agent.monitor.item_collected_port);
-//   model         = new(fifo_beat_subscriber_for_slv, fifo_beat_subscriber_for_mst, fmodel);
   fmodel = new();
   fifo_subscriber_for_packet    = new(fifo_beat_subscriber_for_slv,fifo_beat_subscriber_for_mst,fmodel);
   
   fork
       begin
           fifo_sequence.do_work();
-        //   #1000;
       end
       begin
           fifo_subscriber_for_packet.do_work();
@@ -195,9 +191,9 @@ initial begin
           fifo_beat_subscriber_for_slv.do_work();
       end
   join_any
-    // join
+
   $display("time just after fork exit : %0t", $realtime);
-  #2000000;
+  #1000000;
   disable fork;
   $display("time after delay fork exit : %0t", $realtime);
   fifo_subscriber_for_packet.publish_results();

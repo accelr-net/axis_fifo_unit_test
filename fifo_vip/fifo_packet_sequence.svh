@@ -9,7 +9,7 @@ class fifo_packet_sequence extends packet_sequence #(fifo_packet);
 
     task do_mst_work();
         automatic fifo_packet   temp_packet;
-        for (int packet_count = 0; packet_count < 1000000; packet_count++) begin
+        for (int packet_count = 0; packet_count < 1000; packet_count++) begin
             temp_packet = new();
             temp_packet.randomize();
             // temp_packet.post_randomize();

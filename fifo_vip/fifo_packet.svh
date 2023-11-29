@@ -5,7 +5,6 @@ class fifo_packet extends data_packet;
     function new();
     endfunction
 
-    //TODOs-function - post_randomize()
     function u8_array serialize();
         return data_buffer;
     endfunction
