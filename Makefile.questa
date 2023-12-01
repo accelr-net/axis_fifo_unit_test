@@ -1,0 +1,19 @@
+REF_SUBDIRS := sim/questa.sim
+CLEAN_REF_SUBDIRS := $(addprefix clean-,${REF_SUBDIRS})
+
+.PHONY: $(REF_SUBDIRS) all_ref clean
+
+all: all_ref
+
+all_ref: $(REF_SUBDIRS)
+
+$(REF_SUBDIRS):
+	@echo Running make for - $@
+	$(MAKE) -C $@ all
+
+$(CLEAN_REF_SUBDIRS): clean-%:
+	@echo clean $*
+	$(MAKE) -C $* clean
+
+clean: $(CLEAN_REF_SUBDIRS)
+	rm -rf *.log *.pg *.log *.str *.jou *.pb xsim.dir .Xil *.wdb *.wcfg

@@ -1,0 +1,18 @@
+# compile verilog/system verilog design source files
+sv xil_defaultlib  --include "../../fifo_ip_project.ip_user_files/ipstatic/hdl" --include "../../axi4s_vip_base" --include "../../fifo_vip" --include "/tools/Xilinx/Vivado/2022.2/data/xilinx_vip/include" \
+"../../fifo_ip_project.gen/sources_1/ip/axi4stream_vip_1_2/sim/axi4stream_vip_1_pkg.sv" \
+"../../fifo_ip_project.gen/sources_1/ip/axi4stream_vip_1_2/sim/axi4stream_vip_1.sv" \
+"../../fifo_ip_project.gen/sources_1/ip/axi4stream_vip_0_1/sim/axi4stream_vip_0_pkg.sv" \
+"../../fifo_ip_project.gen/sources_1/ip/axi4stream_vip_0_1/sim/axi4stream_vip_0.sv" \
+"../../rtl/AXI_FIFO.sv" \
+"../../rtl/async_fwft_fifo_bin_ptr.sv" \
+"../../axi4s_vip_base/axi4s_vip_base.sv" \
+"../../fifo_vip/fifo_pkg.sv" \
+"../../rtl/memory.sv" \
+"../../sim/tb_top.sv" \
+
+# compile glbl module
+verilog xil_defaultlib "glbl.v"
+
+# Do not sort compile order
+nosort
