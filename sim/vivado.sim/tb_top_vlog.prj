@@ -1,5 +1,5 @@
 # compile verilog/system verilog design source files
-sv xil_defaultlib  --include "../../fifo_ip_project.ip_user_files/ipstatic/hdl" --include "../../axi4s_vip_base" --include "../../fifo_vip" --include "/tools/Xilinx/Vivado/2022.2/data/xilinx_vip/include" \
+sv xil_defaultlib --include "../../fifo_ip_project.ip_user_files/ipstatic/hdl" --include "../../axi4s_vip_base" --include "../../fifo_vip" --include "${XILINX_VIP_INCLUDE_PATH}" \
 "../../fifo_ip_project.gen/sources_1/ip/axi4stream_vip_1_2/sim/axi4stream_vip_1_pkg.sv" \
 "../../fifo_ip_project.gen/sources_1/ip/axi4stream_vip_1_2/sim/axi4stream_vip_1.sv" \
 "../../fifo_ip_project.gen/sources_1/ip/axi4stream_vip_0_1/sim/axi4stream_vip_0_pkg.sv" \

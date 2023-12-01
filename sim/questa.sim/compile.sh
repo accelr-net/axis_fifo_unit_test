@@ -16,5 +16,5 @@
 # ****************************************************************************
 bin_path="/home/sachith/Questa.2022.2/questasim/linux_x86_64"
 set -Eeuo pipefail
-source tb_top_compile.do 2>&1 | tee compile.log
+source tb_top_compile.do $1 2>&1 | tee compile.log
 

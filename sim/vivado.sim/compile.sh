@@ -14,6 +14,8 @@
 # usage: compile.sh
 #
 # ****************************************************************************
+# export XILINX_VIP_INCLUDE_PATH=/tools/Xilinx/Vivado/2022.2/data/xilinx_vip/include
+echo "$XILINX_VIP_INCLUDE_PATH"
 set -Eeuo pipefail
 # compile Verilog/System Verilog design sources
 echo "xvlog --incr --relax -L uvm -L axi4stream_vip_v1_1_13 -L xilinx_vip -prj tb_top_vlog.prj"

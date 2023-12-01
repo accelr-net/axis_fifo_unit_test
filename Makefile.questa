@@ -1,4 +1,5 @@
 REF_SUBDIRS := sim/questa.sim
+XILINX_VIP_INCLUDE_PATH := /tools/Xilinx/Vivado/2022.2/data/xilinx_vip/include
 CLEAN_REF_SUBDIRS := $(addprefix clean-,${REF_SUBDIRS})
 
 .PHONY: $(REF_SUBDIRS) all_ref clean
@@ -9,7 +10,7 @@ all_ref: $(REF_SUBDIRS)
 
 $(REF_SUBDIRS):
 	@echo Running make for - $@
-	$(MAKE) -C $@ all
+	$(MAKE) -C $@ all XILINX_VIP_INCLUDE_PATH=$(XILINX_VIP_INCLUDE_PATH)
 
 $(CLEAN_REF_SUBDIRS): clean-%:
 	@echo clean $*

@@ -4,7 +4,7 @@ questa_lib: questa_lib
 	mkdir questa_lib
 
 comp: 
-	compile.sh
+	compile.sh $(XILINX_VIP_INCLUDE_PATH)
 
 elab: 
 	elaborate.sh
