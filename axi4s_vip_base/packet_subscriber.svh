@@ -1,3 +1,9 @@
+//------------------------------------------------------------------------------
+//
+// CLASS: packet_subscriber
+//
+// base class for subscriber classes in this design
+//------------------------------------------------------------------------------
 class packet_subscriber #(
     type packet_t = data_packet
 );
@@ -8,6 +14,9 @@ class packet_subscriber #(
     int                         pass_count;
     int                         fail_count;
 
+    // Function: new
+    //
+    // This implements the constructor for the packet_subscriber class.
     function new(
         beat_subscriber #(packet_t) slv_beat_sub,
         beat_subscriber #(packet_t) mst_beat_sub,
@@ -19,8 +28,10 @@ class packet_subscriber #(
         expected_packets    =   new();
     endfunction: new
 
+    // Function: do_work
+    //
+    // fork join and run the read_from_mst, read_from_slv threads to run on the same time
     task do_work();
-        // Fork read_from_mst & read_from_slv
         fork
             begin
                 read_from_mst();
@@ -32,6 +43,9 @@ class packet_subscriber #(
         #1000;
     endtask: do_work
 
+    // Task: read_from_mst.
+    //
+    // task which introduce read_from_mst task.
     task read_from_mst();
         while(1) begin
             packet_t    last_packet; 
@@ -47,6 +61,9 @@ class packet_subscriber #(
         end
     endtask: read_from_mst
 
+    // Task: read_from_slv.
+    //
+    // task which introduce read_from_slv task.
     task read_from_slv();
         while(1) begin    
             packet_t    slv_last_packet;
@@ -65,6 +82,9 @@ class packet_subscriber #(
         end
     endtask: read_from_slv
 
+    // Task: publish_results.
+    //
+    // task which introduce publish_results printing self-check test results.
     task publish_results();
         $display("+---------------------------------------------------------------+");
         $display("|                             Scoreboard                        |");
@@ -75,6 +95,9 @@ class packet_subscriber #(
         $display("+---------------------------------------------------------------+");
     endtask: publish_results
 
+    // Task: is_success.
+    //
+    // task which introduce is_success printing self-check test results.
     function bit is_success();
         if(fail_count != 0) begin
             $display("[packet_subscriber#is_success()]-DUT is perfect!");
@@ -83,4 +106,5 @@ class packet_subscriber #(
             $display("[packet_subscriber#is_success()]-There is issues some issues");
         end
     endfunction: is_success
+
 endclass: packet_subscriber

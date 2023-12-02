@@ -19,6 +19,9 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
+// Package imports: axi4stream vip packages and fifo_ip package. 
+//
+// this  includes all the axi4stream and fifo_ip base packages.
 import axi4stream_vip_pkg::*;
 import axi4stream_vip_0_pkg::*;
 import axi4stream_vip_1_pkg::*;
@@ -76,7 +79,9 @@ module tb_top();
     fifo_packet_subscriber  fifo_subscriber_for_packet;
     fifo_model              fifo_model;
 
-    
+    // Module instantiation: axi4master. 
+    //
+    // instantiate the axi4stream_vip_0 module for axi4master driver
     axi4stream_vip_0 axi4master (
         .aclk(aclk),                    // input wire aclk
         .aresetn(aresetn),              // input wire aresetn
@@ -87,6 +92,9 @@ module tb_top();
         .m_axis_tlast(m_axis_tlast)     // output wire [0 : 0] m_axis_tlast
     );
 
+    // Module instantiation: axi4slave. 
+    //
+    // instantiate the axi4stream_vip_1 module for axi4slave driver
     axi4stream_vip_1 axi4slave (
         .aclk(aclk),                    // input wire aclk
         .aresetn(aresetn),              // input wire aresetn
@@ -97,6 +105,9 @@ module tb_top();
         .s_axis_tlast(s_axis_tlast)     // input wire [0 : 0] s_axis_tlast
     );
 
+    // Module instantiation: axi_fifo_0. 
+    //
+    // instantiate the AXI_FIFO module for axi_fifo_0 axi_fifo dut
     AXI_FIFO #(
         .FIFO_WIDTH(FIFO_WIDTH),
         .FIFO_DEPTH(FIFO_DEPTH),
@@ -168,6 +179,10 @@ module tb_top();
         fifo_model = new();
         fifo_subscriber_for_packet    = new(fifo_beat_subscriber_for_slv,fifo_beat_subscriber_for_mst,fifo_model);
         
+        // Fork join: managing all the tasks
+        //
+        // fork join and run the do_work functions of fifo_sequence, fifo_subscriber_for_packet, 
+        // fifo_beat_subscriber_for_mst, fifo_beat_subscriber_for_slv class objects.
         fork
             begin
                 fifo_sequence.do_work();

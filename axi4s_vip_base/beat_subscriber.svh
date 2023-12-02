@@ -1,16 +1,30 @@
+//------------------------------------------------------------------------------
+//
+// CLASS: beat_subscriber
+//
+// This class is where the axi4stream master and slave is being monitered with 
+// the sent and received packets by pushing back the packets in to the 
+// packet_queue and pop_front them in action once intantiated in the design. 
+//------------------------------------------------------------------------------
 class beat_subscriber #(
     type packet_t   =   data_packet
 );
     axi4stream_monitor_transaction  beat_queue[$];
     packet_t                        packet_queue[$];
     axi4s_item_collected_port       item_collection_port;
-
+  
+    // Function: new
+    //
+    // This implements the constructor for the beat_subscriber class.
     function new(
         ref axi4s_item_collected_port   item_collection_port
     );
         this.item_collection_port = item_collection_port;
     endfunction: new
 
+    // Function: do_work
+    //
+    // This implements the functionality of capturing the packet to the packet_queue of beat_subscriber class.
     task do_work();
         forever begin
             axi4stream_monitor_transaction  current_transaction;
@@ -38,6 +52,9 @@ class beat_subscriber #(
         end
     endtask: do_work
 
+    // Function: pop
+    //
+    // This implements method of reading back the packets recorded in thew packet_queue.
     function packet_t pop();
         packet_t null_packet;
         if(packet_queue.size() != 0) begin
@@ -48,4 +65,5 @@ class beat_subscriber #(
             return null_packet;
         end
     endfunction: pop
+    
 endclass: beat_subscriber

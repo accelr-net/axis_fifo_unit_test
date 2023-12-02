@@ -1,9 +1,19 @@
+//------------------------------------------------------------------------------
+//
+// CLASS: packet_sequence
+//
+// this is an extended class of packet_sequence class and thisdefines all 
+// the vitual functions introduced in the packet_sequence class.
+//------------------------------------------------------------------------------
 virtual class packet_sequence #(
     type packet_t = data_packet
 );
     axi4stream_vip_0_mst_t   mst_agent;
     axi4stream_vip_1_slv_t   slv_agent;
 
+    // Function: new
+    //
+    // This implements the constructor for the packet_sequence class.
     function new(
         ref axi4stream_vip_0_mst_t   mst_agent,
         ref axi4stream_vip_1_slv_t   slv_agent
@@ -12,8 +22,10 @@ virtual class packet_sequence #(
         this.slv_agent = slv_agent;
     endfunction: new
     
+    // Function: do_work
+    //
+    // fork join and run the do_mst_work, do_slv_work threads to run master and slave driverse
     task do_work();
-        //Fork do_slv_work & do_mst_work
         fork
             begin
                 do_mst_work();
@@ -24,10 +36,15 @@ virtual class packet_sequence #(
         join
     endtask: do_work
     
+    // Function: do_mst_work.
+    //
+    // virtual task which introduce do_mst_work work.
     pure virtual protected task do_mst_work();
     
+    // Function: do_slv_work.
+    //
+    // task which introduce do_slv_work work.
     protected task do_slv_work();
-        //Selt flow control config to slave_driver
         axi4stream_ready_gen ready_gen;
         ready_gen = slv_agent.driver.create_ready("ready_gen");
         ready_gen.set_ready_policy(XIL_AXI4STREAM_READY_GEN_OSC);
@@ -36,6 +53,9 @@ virtual class packet_sequence #(
         slv_agent.driver.send_tready(ready_gen);
     endtask: do_slv_work
 
+    // Function: send_packet.
+    //
+    // task which introduce send_packet work.
     protected task send_packet(packet_t packet);
         automatic int                       beat_count;
         automatic u8_array                  data_array;
@@ -65,4 +85,5 @@ virtual class packet_sequence #(
             mst_agent.driver.seq_item_port.get_next_rsp(wr_transactionc);
         end
     endtask: send_packet
+    
 endclass: packet_sequence
