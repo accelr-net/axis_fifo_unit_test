@@ -1,0 +1,59 @@
+@startuml acc_axi4s_vip
+
+set namespaceSeparator ::
+
+namespace axi4s_vip_base {
+    abstract class data_packet {
+      +new()
+      #{abstract} serialize() : u8_array
+      #{abstract} deserialize(body : u8_array) : bit 
+    }
+    
+    class packet_sequence <packet_t> {
+      -mst_agent : ex_sim_axi4stream_vip_mst_0_mst_t
+      -slv_agent : ex_sim_axi4stream_vip_slv_0_slv_t
+
+      +new()
+      +do_work() : task
+      #{abstract} do_mst_work() : task
+      #do_slv_work() : task
+      #send_packet (packet : packet_t) : task
+    }
+
+    class beat_subscriber <packet_t> {
+      -beat_queue : axi4stream_monitor_transaction[$]
+      -packet_queue : packet_t[$]
+      -item_collection_port : xil_item_collected_port
+
+      +new()
+      +do_work() : task
+      +get() : data_packet
+
+    }
+
+    abstract class model <packet_t> {
+      +new()
+      +{abstract} get_expected_packet (input : packet_t) : packet_t
+    }
+
+    class packet_subscriber <packet_t> {
+      -mst_beat_subscriber : beat_subscriber <packet_t>
+      -slv_beat_subscriber : beat_subscriber <packet_t>
+      -expected_packet : packet_t[$]
+      -model : model<packet_t>
+
+      +new()
+      +do_work() : task
+      +read_from_mst() : task
+      +read_from_slv() : task
+      +publish_results() : task
+      +is_sucess() : bit
+    }
+}
+
+namespace fifo_vip {
+    class packet_sequence {}
+    class fifo_packet {}
+}
+
+@enduml
