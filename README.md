@@ -41,16 +41,16 @@ We have developed a packet-level Verification IP (VIP) using the Xilinx AXI4-Str
 
 ## Getting started
 
-This is an example of how you may give instructions on setting up your project. This example will demostrate how to add verification for a fifo(first in first out design) with a axi4stream slave and a master ports.
+This is an example of how you may give instructions on setting up your project. This example will demonstrates how to add verification for an axi4 stream fifo -i.e. fifo with an axi4 stream slave and a master ports.
 
 1. Download or clone AXI4S_VIP project
   ```
-    git clone git@github.com:accelr-net/axi4stream_vip_fifo.git
+    git clone git@github.com:accelr-net/axis_fifo_unit_test.git
   ``` 
-2. Copy _axi4s_vip_base_ direcory to your project
+2. Copy _axi4s_vip_base_ directory to your project
 3. Add _axi4s_vip_base.sv_ file to __add or create design sources__ your Xilinx Vivado simulator
-4. Extend your project files with our base classes (You only have to extend ```data_packet, packet_sequence, model```).
-5. Import _axi4s_vip_base_ in your top level model module
+4. Extend your project files from our base classes (You only have to extend ```data_packet, packet_sequence, model```).
+5. Import the _axi4s_vip_base_ package in your test top / top level module.
   ```
     import axi4s_vip_base::*;
   ```
@@ -94,13 +94,13 @@ This is an example of how you may give instructions on setting up your project. 
 
 ## Example design
 
-This is an example of how you may give instructions on setting up your project. This example will demostrate how to add verification for a fifo(first in first out design) with a axi4stream slave and a master ports. example fifo_classes at ```../fifo_vip/ ``` directory
+This is an example of how you may give instructions on setting up your project. This example will demonstrates how to add the verification components for an axi4 stream fifo. (Refer ```../fifo_vip/ ``` directory)
 
 1. Download or clone AXI4S_VIP project
   ```
-    git clone git@github.com:accelr-net/axi4stream_vip_fifo.git
+    git clone git@github.com:accelr-net/axis_fifo_unit_test.git
   ``` 
-1. Copy _axi4s_vip_base_ direcory to your project
+1. Copy _axi4s_vip_base_ directory to your project
 2. Add _axi4s_vip_base.sv_ file to __add or create design sources__ your Xilinx Vivado simulator
 3. Extend your project files with our base classes (You only have to extend ```data_packet, packet_sequence, model```).
 4. Import _axi4s_vip_base_ in your top level model module
@@ -118,11 +118,11 @@ This is an example of how you may give instructions on setting up your project. 
   ```
 7. Initialize above objects in a initial block in your top module
   ```SystemVerilog
-    model                         = new();
+    fifo_model                    = new();
     fifo_sequence                 = new(mst_agent,slv_agent);
     fifo_beat_subscriber_for_mst  = new(mst_agent.monitor.item_collected_port);
     fifo_beat_subscriber_for_slv  = new(slv_agent.monitor.item_collected_port);
-    fifo_subscriber_for_packet    = new(fifo_beat_subscriber_for_slv,fifo_beat_subscriber_for_mst,model);
+    fifo_subscriber_for_packet    = new(fifo_beat_subscriber_for_slv, fifo_beat_subscriber_for_mst, fifo_model);
   ```
 8. fork ```do_work()``` of the objects ```fifo_sequence, fifo_beat_subscriber_for_mst, fifo_beat_subscriber_for_slv, fifo_subscriber_for_packet``` like below
   ```
@@ -190,3 +190,7 @@ This is an example of how you may give instructions on setting up your project. 
       endfunction
     endclass
   ```
+---
+> **_NOTE:_** This project is a work-in-progress. As such we value your feedback. If you come across any issues while using the source code in the project, please do reach out for help by creating a new issue via github.
+---
+
