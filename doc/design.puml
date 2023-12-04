@@ -50,10 +50,4 @@ namespace axi4s_vip_base {
       +is_sucess() : bit
     }
 }
-
-namespace fifo_vip {
-    class packet_sequence {}
-    class fifo_packet {}
-}
-
 @enduml

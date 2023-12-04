@@ -6,7 +6,7 @@
   <h1 align="center">AXI4S_VIP</h1>
 
   <p align="center">
-    VIP project
+   Accelr VIP project based on AXI4-Stream
     <br />
   </p>
 </div>
@@ -15,15 +15,20 @@
 ## Content
 - [Content](#content)
 - [About the project](#about-the-project)
-  - [imporant directory with files](#imporant-directory-with-files)
-- [Getting Started](#getting-started)
+  - [Class diagram](#class-diagram)
+  - [Imporant directory with files](#imporant-directory-with-files)
+- [Getting started](#getting-started)
 - [Example design](#example-design)
 
 ## About the project
 
-our latest creation, a Verification IP (VIP) for a Device Under Test (DUT) that incorporates AXI4-Stream master and slave ports
+Our latest creation, a Verification IP (VIP) for a Device Under Test (DUT) that incorporates AXI4-Stream master and slave ports.The purpose of this VIP is to facilitate the verification process of DUTs that utilize the AXI4-Stream protocol. By integrating our VIP, design and verification engineers gain the ability to customize packets that adhere to the AXI4-Stream protocol, enabling comprehensive testing of their designs.
 
-### imporant directory with files
+We have developed a packet-level Verification IP (VIP) using the Xilinx AXI4-Stream VIP at the beat level. This VIP allows us to thoroughly verify any Device Under Test (DUT) by customizing and analyzing AXI4-Stream packets
+### Class diagram
+![UML diagram](out/doc/design/acc_axi4s_vip.png)
+
+### Imporant directory with files
 ```
   ../axis_vip_base/
       ├── axi4s_vip_base.sv
@@ -34,7 +39,7 @@ our latest creation, a Verification IP (VIP) for a Device Under Test (DUT) that 
       └── packet_subscriber.svh
 ```
 
-## Getting Started
+## Getting started
 
 This is an example of how you may give instructions on setting up your project. This example will demostrate how to add verification for a fifo(first in first out design) with a axi4stream slave and a master ports.
 
@@ -45,6 +50,47 @@ This is an example of how you may give instructions on setting up your project. 
 2. Copy _axi4s_vip_base_ direcory to your project
 3. Add _axi4s_vip_base.sv_ file to __add or create design sources__ your Xilinx Vivado simulator
 4. Extend your project files with our base classes (You only have to extend ```data_packet, packet_sequence, model```).
+5. Import _axi4s_vip_base_ in your top level model module
+  ```
+    import axi4s_vip_base::*;
+  ```
+1. Declare ```<your_module>_packet_sequence, <your_module>_beat_subscriber, <your_module>_beat_subscriber, <your_module>_packet_subscriber, <your_module>_model``` in your top module
+  ```SystemVerilog
+    <your_module>_model                                    model;
+    <your_module>_packet_sequence                          <your_module>_sequence;
+    <your_module>_beat_subscriber                          <your_module>_beat_subscriber_for_mst;
+    <your_module>_beat_subscriber                          <your_module>_beat_subscriber_for_slv;
+    <your_module>_packet_subscriber                        <your_module>_subscriber_for_packet;
+    
+  ```
+7. Initialize above objects in a initial block in your top module
+  ```SystemVerilog
+    model                                  = new();
+    <your_module>_sequence                 = new(mst_agent,slv_agent);
+    <your_module>_beat_subscriber_for_mst  = new(mst_agent.monitor.item_collected_port);
+    <your_module>_beat_subscriber_for_slv  = new(slv_agent.monitor.item_collected_port);
+    <your_module>_subscriber_for_packet    = new(<your_module>_beat_subscriber_for_slv,<your_module>_beat_subscriber_for_mst,model);
+  ```
+8. fork ```do_work()``` of the objects ```<your_module>_sequence, <your_module>_beat_subscriber_for_mst, <your_module>_beat_subscriber_for_slv, <your_module>_subscriber_for_packet``` like below
+  ```
+    fork
+      begin
+          <your_module>_sequence.do_work();
+          #<time_delay>;
+      end
+      begin
+          <your_module>_subscriber_for_packet.do_work();
+      end
+      begin
+          <your_module>_beat_subscriber_for_mst.do_work();
+          
+      end
+      begin
+          <your_module>_beat_subscriber_for_slv.do_work();
+      end
+    join_any
+  ```
+
 
 ## Example design
 
@@ -54,6 +100,51 @@ This is an example of how you may give instructions on setting up your project. 
   ```
     git clone git@github.com:accelr-net/axi4stream_vip_fifo.git
   ``` 
+1. Copy _axi4s_vip_base_ direcory to your project
+2. Add _axi4s_vip_base.sv_ file to __add or create design sources__ your Xilinx Vivado simulator
+3. Extend your project files with our base classes (You only have to extend ```data_packet, packet_sequence, model```).
+4. Import _axi4s_vip_base_ in your top level model module
+  ```
+    import axi4s_vip_base::*;
+  ```
+1. Declare ```fifo_packet_sequence, fifo_beat_subscriber, fifo_beat_subscriber, fifo_packet_subscriber, fifo_model``` in your top module
+  ```SystemVerilog
+    fifo_model                                    model;
+    fifo_packet_sequence                          fifo_sequence;
+    fifo_beat_subscriber                          fifo_beat_subscriber_for_mst;
+    fifo_beat_subscriber                          fifo_beat_subscriber_for_slv;
+    fifo_packet_subscriber                        fifo_subscriber_for_packet;
+    
+  ```
+7. Initialize above objects in a initial block in your top module
+  ```SystemVerilog
+    model                         = new();
+    fifo_sequence                 = new(mst_agent,slv_agent);
+    fifo_beat_subscriber_for_mst  = new(mst_agent.monitor.item_collected_port);
+    fifo_beat_subscriber_for_slv  = new(slv_agent.monitor.item_collected_port);
+    fifo_subscriber_for_packet    = new(fifo_beat_subscriber_for_slv,fifo_beat_subscriber_for_mst,model);
+  ```
+8. fork ```do_work()``` of the objects ```fifo_sequence, fifo_beat_subscriber_for_mst, fifo_beat_subscriber_for_slv, fifo_subscriber_for_packet``` like below
+  ```
+    fork
+      begin
+          fifo_sequence.do_work();
+          #1000;
+      end
+      begin
+          fifo_subscriber_for_packet.do_work();
+      end
+      begin
+          fifo_beat_subscriber_for_mst.do_work();
+          
+      end
+      begin
+          fifo_beat_subscriber_for_slv.do_work();
+      end
+    join_any
+  ```
+
+
 1. Added fifo classes </br>
   </br>
   
