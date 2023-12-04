@@ -2,9 +2,9 @@
 //
 // CLASS: beat_subscriber
 //
-// This class is where the axi4stream master and slave is being monitered with 
-// the sent and received packets by pushing back the packets in to the 
-// packet_queue and pop_front them in action once intantiated in the design. 
+// This class listens the "axi4s_item_collected_port" from a Xilinx axi4_stream 
+// monitor and extracts and combines data byetes from an "axi4stream_monitor_transaction"s
+// into a data_packet.
 //------------------------------------------------------------------------------
 class beat_subscriber #(
     type packet_t   =   data_packet
@@ -24,7 +24,8 @@ class beat_subscriber #(
 
     // Function: do_work
     //
-    // This implements the functionality of capturing the packet to the packet_queue of beat_subscriber class.
+    // This implements the functionality of capturing the packet to the packet_queue of 
+    // beat_subscriber class.
     task do_work();
         forever begin
             axi4stream_monitor_transaction  current_transaction;

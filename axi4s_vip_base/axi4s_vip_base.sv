@@ -2,14 +2,15 @@
 //
 // Package: axi4s_vip_base
 //
-// The packege gather all the other packeges as below and deefines u8, u8_array, 
-// axi4s_item_collected_port type definitions to the architecture.
+// This package include all the implmentations and dependencies you need to use 
+// the axi4 stream packet orifiented verifiaction framework. 
+//
 //------------------------------------------------------------------------------
 package axi4s_vip_base;
 
     // Package imports: axi4stream vip packages. 
     //
-    // this  includes all the axi4stream base packages.
+    // this  includes all the axi4stream base packages from Xilinx 
     import xil_common_vip_pkg::*;
     import axi4stream_vip_pkg::*;
     import axi4stream_vip_0_pkg::*;

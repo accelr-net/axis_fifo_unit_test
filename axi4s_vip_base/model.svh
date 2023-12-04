@@ -2,7 +2,8 @@
 //
 // CLASS: model
 //
-// base class for describing model architecture which behaves like the axi_fifo
+// This is the base class for the DUT model/predictor. Anyone hoping to utilize the 
+// axi4_vip_base package should derive their DUT model from this class
 //------------------------------------------------------------------------------
 virtual class model #(
     type packet_t = data_packet

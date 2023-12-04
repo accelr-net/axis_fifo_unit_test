@@ -2,7 +2,11 @@
 //
 // CLASS: packet_subscriber
 //
-// base class for subscriber classes in this design
+// base class for packet subscriber classes in the axi4s_vip_base.
+// Collects packets from both the master and slave beat_subscribers
+// Then compates the expected output of the DUT against the actual 
+// output on a per data packet basis (not a beat-by-beat basis) with the
+// aid of the dut model.
 //------------------------------------------------------------------------------
 class packet_subscriber #(
     type packet_t = data_packet

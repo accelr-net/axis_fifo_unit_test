@@ -2,7 +2,10 @@
 //
 // CLASS: data_packet
 //
-// base class for describing packet architecture
+// This is the base sequence-item used by the axi4_vip_base package.
+// It is an abstraction of a data packet modeled as a byte array.
+// Anyone hoping to utilize the axi4_vip_base package should derive their
+// sequence-item from this object.
 //------------------------------------------------------------------------------
 virtual class data_packet;
 

@@ -2,8 +2,9 @@
 //
 // CLASS: packet_sequence
 //
-// this is an extended class of packet_sequence class and thisdefines all 
-// the vitual functions introduced in the packet_sequence class.
+// This is the base sequence used by the axi4_vip_base package.
+// Anyone hoping to utilize the axi4_vip_base package should derive their
+// sequences from this object.
 //------------------------------------------------------------------------------
 virtual class packet_sequence #(
     type packet_t = data_packet
