@@ -6,11 +6,10 @@
 //
 // ************************************************************************************************************************
 //
-// PROJECT      :   axi_fifo_unit_test
-// PRODUCT      :   axi_fifo_unit_test
+// PROJECT      :   axi4s_vip
 // FILE         :   packet_sequence.svh
 // AUTHOR       :   Kasun Buddhi
-// DESCRIPTION  :   support file for axi_fifo_unit_test project
+// DESCRIPTION  :   support file for axi4s_vip project
 //
 // ************************************************************************************************************************
 //

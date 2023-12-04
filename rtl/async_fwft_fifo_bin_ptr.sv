@@ -6,11 +6,10 @@
 //
 // ************************************************************************************************************************
 //
-// PROJECT      :   async_fwft_fifo build
-// PRODUCT      :   async_fwft_fifo build
+// PROJECT      :   axi4s_vip
 // FILE         :   async_fwft_fifo.sv
 // AUTHOR       :   Sachith
-// DESCRIPTION  :   testing and developing advance fifo design
+// DESCRIPTION  :   FIFO_BUILD
 //
 // ************************************************************************************************************************
 //

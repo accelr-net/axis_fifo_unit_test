@@ -6,8 +6,7 @@
 //
 // ************************************************************************************************************************
 //
-// PROJECT      :   FIFO_BUILD
-// PRODUCT      :   FIFO_BUILD
+// PROJECT      :   axi4s_vip
 // FILE         :   mem.sv
 // AUTHOR       :   Sachith Rathnayake
 // DESCRIPTION  :   FIFO_BUILD
