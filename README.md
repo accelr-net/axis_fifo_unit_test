@@ -177,7 +177,7 @@ This is an example of how you may give instructions on setting up your project. 
 
       //give your sequence at do_mst_work() task
       task do_mst_work();
-        //sequence is goes here
+        //sequence goes here
       endtask
     endclass
   ```
