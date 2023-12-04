@@ -1,19 +1,8 @@
 // ************************************************************************************************************************
-//
-// Copyright(C) 2022 ACCELR
-// All rights reserved.
-//
-// THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF
-// ACCELER LOGIC (PVT) LTD, SRI LANKA.
-//
-// This copy of the Source Code is intended for ACCELR's internal use only and is
-// intended for view by persons duly authorized by the management of ACCELR. No
-// part of this file may be reproduced or distributed in any form or by any
-// means without the written approval of the Management of ACCELR.
-//
+// 
 // ACCELR, Sri Lanka            https://accelr.lk
 // No 175/95, John Rodrigo Mw,  info@accelr.net
-// Katubedda, Sri Lanka         +94 77 3166850
+// Katubedda, Sri Lanka
 //
 // ************************************************************************************************************************
 //
